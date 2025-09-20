@@ -184,31 +184,9 @@ php artisan test
 ## 📚 Documentation
 
 ### Project Documentation
+- **[Postman Collection](https://documenter.getpostman.com/view/16893750/2sB3HtEwkc)** - API Documentation
 - **[Architecture Documentation](docs/ARCHITECTURE.md)** - Detailed system architecture and design patternsrequirements
 - **[Cache Stampede Prevention](docs/CACHE_STAMPEDE_PREVENTION.md)** - Caching strategy and performance optimization
-
-### API Documentation
-
-### Base URL
-```
-http://localhost:8000/api/v1
-```
-
-### Authentication
-- API Key middleware for admin endpoints
-- Rate limiting for lead submissions
-
-### Endpoints
-
-#### Cars
-- `GET /cars` - List cars with filtering and pagination
-- `GET /cars/{id}` - Get specific car details
-
-#### Leads
-- `POST /leads` - Create new lead (rate limited)
-
-#### Admin
-- `POST /admin/cache/purge` - Purge application cache
 
 ## Configuration
 
