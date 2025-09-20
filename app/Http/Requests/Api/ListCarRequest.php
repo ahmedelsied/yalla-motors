@@ -29,7 +29,7 @@ class ListCarRequest extends FormRequest
 
             'mileage_max_km' => ['nullable', 'filled', 'integer', 'min:0'],
 
-            'sort' => ['nullable', 'filled', 'string', Rule::in(['listed_at', 'price_cents', 'mileage_km', 'year'])],
+            'sort' => ['nullable', 'filled', 'string', Rule::in(['-listed_at','listed_at', 'price_cents','-price_cents', 'mileage_km','-mileage_km', 'year','-year'])],
             'per_page' => ['nullable', 'filled', 'integer', 'min:1', 'max:50'],
             'include_facets' => ['nullable', 'boolean'],
         ];

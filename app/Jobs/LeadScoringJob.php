@@ -11,7 +11,6 @@ use Carbon\Carbon;
 class LeadScoringJob implements ShouldQueue
 {
     use Queueable;
-
     public function __construct(
         public string $leadId,
         public string $correlationId
@@ -30,7 +29,6 @@ class LeadScoringJob implements ShouldQueue
         }
 
         $score = $this->calculateScore($lead);
-        
         $lead->update(['score' => $score]);
         
         Log::info('LeadScoringJob: Score calculated', [
@@ -55,7 +53,6 @@ class LeadScoringJob implements ShouldQueue
         if (!empty($lead->source)) {
             $score += 10;
         }
-
         if ($lead->car && $lead->car->listed_at) {
             $daysSinceListed = Carbon::parse($lead->car->listed_at)->diffInDays(now());
             // More recent listings get higher scores

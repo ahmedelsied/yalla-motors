@@ -91,7 +91,6 @@ class CarFilter extends QueryFilter
         }
 
         $allowedSorts = ['listed_at', 'price_cents', 'mileage_km', 'year'];
-        
         if (in_array($value, $allowedSorts)) {
             $this->builder->orderBy($value, $direction);
         }

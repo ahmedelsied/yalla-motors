@@ -16,8 +16,8 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->foreignUlid('car_id')->constrained('cars');
             $table->string('name');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('source')->nullable();
             $table->string('utm_campaign')->nullable();
             $table->string('status')->default(LeadStatus::NEW->value);

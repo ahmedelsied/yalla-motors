@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
+    /** @use HasFactory<\Database\Factories\LeadFactory> */
     use HasFactory, HasUlids, SoftDeletes;
 
     protected $guarded = [];
