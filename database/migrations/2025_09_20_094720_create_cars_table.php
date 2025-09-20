@@ -15,13 +15,15 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('dealer_id')->constrained('dealers');
-            $table->string('country_code');
+            $table->string('make');
             $table->string('model');
             $table->integer('year');
-            $table->decimal('price', 10, 2);
+            $table->integer('price_cents');
+            $table->integer('mileage_km');
+            $table->string('country_code');
+            $table->string('city');
             $table->string('status')->default(CarStatus::ACTIVE->value);
             $table->timestamp('listed_at');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

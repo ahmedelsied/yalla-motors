@@ -20,34 +20,15 @@ class CarFactory extends Factory
     {
         return [
             'dealer_id' => Dealer::inRandomOrder()->first()->id,
-            'country_code' => fake()->countryCode(),
+            'make' => fake()->word(),
             'model' => fake()->word(),
             'year' => fake()->year(),
-            'price' => fake()->randomFloat(2, 1000, 100000),
-            'status' => fake()->randomElement(CarStatus::cases()),
+            'price_cents' => fake()->numberBetween(1000, 100000),
+            'mileage_km' => fake()->numberBetween(1000, 100000),
+            'country_code' => fake()->countryCode(),
+            'city' => fake()->city(),
+            'status' => fake()->randomElement(CarStatus::cases())->value,
             'listed_at' => fake()->dateTime()->format('Y-m-d H:i:s')
         ];
-    }
-
-    /**
-     * Configure the model factory.
-     */
-    public function configure()
-    {
-        return $this->afterCreating(function ($car) {
-            $width = fake()->randomElement([800, 1024, 1200, 1600]);
-            $height = fake()->randomElement([600, 768, 900, 1200]);
-            $imageId = fake()->numberBetween(1, 1000);
-            
-            $imageUrl = "https://placehold.co/{$width}x{$height}/0066CC/FFFFFF?text=Car+Image+{$imageId}";
-
-            $car->addMediaFromUrl($imageUrl)
-                ->toMediaCollection('images');
-
-            $thumbnailUrl = "https://placehold.co/400x300/0066CC/FFFFFF?text=Car+Thumbnail";
-
-            $car->addMediaFromUrl($thumbnailUrl)
-                ->toMediaCollection('thumbnails');
-        });
     }
 }

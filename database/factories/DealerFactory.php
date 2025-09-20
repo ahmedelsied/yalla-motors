@@ -18,6 +18,7 @@ class DealerFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'country_code' => fake()->countryCode(),
         ];
     }
 }

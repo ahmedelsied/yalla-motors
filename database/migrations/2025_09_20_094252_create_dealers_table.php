@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('dealers', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('name');
+            $table->string('country_code');
             $table->timestamps();
         });
     }

@@ -6,15 +6,13 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Car extends Model implements HasMedia
+class Car extends Model
 {
     /** @use HasFactory<\Database\Factories\CarFactory> */
-    use HasFactory, HasUlids, InteractsWithMedia;
+    use HasFactory, HasUlids;
 
-    protected $fillable = ['dealer_id', 'country_code', 'model', 'year', 'price', 'status', 'listed_at'];
+    protected $guarded = [];
 
     public function dealer(): BelongsTo
     {
