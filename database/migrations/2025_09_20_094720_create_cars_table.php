@@ -15,14 +15,14 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('dealer_id')->constrained('dealers');
-            $table->string('make');
-            $table->string('model');
-            $table->integer('year');
-            $table->integer('price_cents');
-            $table->integer('mileage_km');
-            $table->string('country_code');
-            $table->string('city');
-            $table->string('status')->default(CarStatus::ACTIVE->value);
+            $table->string('make')->index();
+            $table->string('model')->index();
+            $table->integer('year')->index();
+            $table->integer('price_cents')->index();
+            $table->integer('mileage_km')->index();
+            $table->string('country_code')->index();
+            $table->string('city')->index();
+            $table->string('status')->index()->default(CarStatus::ACTIVE->value);
             $table->timestamp('listed_at');
             $table->timestamps();
         });
