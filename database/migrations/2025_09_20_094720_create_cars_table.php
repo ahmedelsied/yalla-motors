@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('country_code')->index();
             $table->string('city')->index();
             $table->string('status')->index()->default(CarStatus::ACTIVE->value);
-            $table->timestamp('listed_at');
+            $table->dateTime('listed_at');
             $table->timestamps();
         });
     }

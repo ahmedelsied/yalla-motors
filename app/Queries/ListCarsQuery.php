@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Enums\CarStatus;
 use App\Filters\CarFilter;
 use App\Models\Car;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -26,7 +27,7 @@ class ListCarsQuery
 
     private function setCars(): self
     {
-        $this->cars = Car::filter($this->filters)->paginate($this->perPage);
+        $this->cars = Car::where('status', CarStatus::ACTIVE->value)->filter($this->filters)->paginate($this->perPage);
         return $this;
     }
 
