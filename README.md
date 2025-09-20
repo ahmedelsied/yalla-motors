@@ -184,8 +184,7 @@ php artisan test
 ## 📚 Documentation
 
 ### Project Documentation
-- **[Architecture Documentation](docs/ARCHITECTURE.md)** - Detailed system architecture and design patterns
-- **[Technical Specification](docs/TECHNICAL_SPECIFICATION.md)** - Complete API specifications and technical requirements
+- **[Architecture Documentation](docs/ARCHITECTURE.md)** - Detailed system architecture and design patternsrequirements
 - **[Cache Stampede Prevention](docs/CACHE_STAMPEDE_PREVENTION.md)** - Caching strategy and performance optimization
 
 ### API Documentation
