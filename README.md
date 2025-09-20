@@ -181,7 +181,14 @@ php artisan test
 
 ```
 
-## 📚 API Documentation
+## 📚 Documentation
+
+### Project Documentation
+- **[Architecture Documentation](docs/ARCHITECTURE.md)** - Detailed system architecture and design patterns
+- **[Technical Specification](docs/TECHNICAL_SPECIFICATION.md)** - Complete API specifications and technical requirements
+- **[Cache Stampede Prevention](docs/CACHE_STAMPEDE_PREVENTION.md)** - Caching strategy and performance optimization
+
+### API Documentation
 
 ### Base URL
 ```
