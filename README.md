@@ -1,61 +1,252 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# YallaMotor - Car Marketplace API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based car marketplace API with advanced filtering, lead management, and caching capabilities.
 
-## About Laravel
+## Project Structure
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+YallaMotor/
+├── app/
+│   ├── Enums/                    # Application enums
+│   │   ├── CarStatus.php         # Car status definitions
+│   │   └── LeadStatus.php        # Lead status definitions
+│   ├── Filters/                  # Query filtering system
+│   │   ├── CarFilter.php         # Car-specific filters
+│   │   └── QueryFilter.php       # Base filter class
+│   ├── Http/
+│   │   ├── Controllers/Api/      # API controllers
+│   │   │   ├── BaseApiController.php
+│   │   │   ├── CarController.php
+│   │   │   ├── LeadController.php
+│   │   │   └── CacheController.php
+│   │   ├── Middleware/           # Custom middleware
+│   │   │   ├── APIKeyMiddleware.php
+│   │   │   └── LeadRateLimitMiddleware.php
+│   │   ├── Requests/Api/         # Form request validation
+│   │   │   ├── CreateLeadRequest.php
+│   │   │   └── ListCarRequest.php
+│   │   └── Resources/            # API resource transformers
+│   │       ├── CarResource.php
+│   │       ├── CarCollection.php
+│   │       ├── LeadResource.php
+│   │       └── DealerResource.php
+│   ├── Jobs/                     # Background jobs
+│   │   └── LeadScoringJob.php    # Asynchronous lead scoring
+│   ├── Models/                   # Eloquent models
+│   │   ├── Car.php
+│   │   ├── Dealer.php
+│   │   └── Lead.php
+│   ├── Queries/                  # Query objects
+│   │   └── ListCarsQuery.php     # Car listing query logic
+│   ├── Services/                 # Business logic services
+│   │   ├── CarService.php        # Car-related business logic
+│   │   └── LeadService.php       # Lead-related business logic
+│   ├── Traits/                   # Reusable traits
+│   │   └── Filterable.php        # Model filtering trait
+│   └── Utils/                    # Utility functions
+│       ├── helpers.php           # Global helper functions
+│       └── ModelFilters.php      # Model filtering utilities
+├── config/                       # Configuration files
+├── database/
+│   ├── factories/                # Model factories for testing
+│   ├── migrations/               # Database migrations
+│   └── seeders/                  # Database seeders
+├── docs/                         # Project documentation
+│   └── CACHE_STAMPEDE_PREVENTION.md
+├── public/                       # Web server document root
+├── resources/
+│   ├── css/                      # Stylesheets
+│   ├── js/                       # JavaScript files
+│   └── views/                    # Blade templates
+├── routes/
+│   ├── api.php                   # API routes
+│   ├── web.php                   # Web routes
+│   └── console.php               # Console routes
+├── storage/                      # File storage
+├── tests/                        # Test suites
+│   ├── Feature/                  # Feature tests
+│   │   ├── CarsEndpointTest.php
+│   │   ├── LeadsEndpointTest.php
+│   │   ├── CacheInvalidationTest.php
+│   │   └── LeadCreationTest.php
+│   └── Unit/                     # Unit tests
+│       └── LeadScoringJobTest.php
+└── vendor/                       # Composer dependencies
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP**: 8.2 or higher
+- **Composer**: Latest version
+- **MySQL**: 5.7 or higher (or MariaDB 10.2+)
+- **Laravel Valet** (macOS) or **Laragon** (Windows)
 
-## Learning Laravel
+## 🛠️ Installation & Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ahmedelsied/yalla-motors.git
+cd YallaMotor
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Install Dependencies
+```bash
+composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Environment Configuration
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Laravel Sponsors
+### 4. Database Setup
+```bash
+# Create database
+mysql -u root -p -e "CREATE DATABASE yalla_motor;"
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# Update .env with database credentials
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=yalla_motor
+DB_USERNAME=root
+DB_PASSWORD=your_password
 
-### Premium Partners
+# Run migrations
+php artisan migrate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Seed sample data (optional)
+php artisan db:seed
+```
 
-## Contributing
+### 5. Testing Database Setup
+```bash
+# Create testing database
+mysql -u root -p -e "CREATE DATABASE yalla_motor_testing;"
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Run migrations for testing
+php artisan migrate --database=testing
+```
 
-## Code of Conduct
+### 6. Cache Configuration (Optional)
+For production with Redis:
+```bash
+# Update .env
+CACHE_DRIVER=redis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 7. Queue Configuration
+```bash
+# For development (sync)
+QUEUE_CONNECTION=sync
 
-## Security Vulnerabilities
+# For production (database or Redis)
+QUEUE_CONNECTION=database
+# or
+QUEUE_CONNECTION=redis
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Starting the Project
 
-## License
+### Development Server
+```bash
+# Start Laravel development server
+php artisan serve
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# In another terminal, start queue worker (if using async queues)
+php artisan queue:work
+
+```
+
+### Production Deployment
+```bash
+# Optimize for production
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Start queue workers
+php artisan queue:work --daemon
+```
+
+## Running Tests
+
+```bash
+# Run all tests
+php artisan test
+
+```
+
+## 📚 API Documentation
+
+### Base URL
+```
+http://localhost:8000/api/v1
+```
+
+### Authentication
+- API Key middleware for admin endpoints
+- Rate limiting for lead submissions
+
+### Endpoints
+
+#### Cars
+- `GET /cars` - List cars with filtering and pagination
+- `GET /cars/{id}` - Get specific car details
+
+#### Leads
+- `POST /leads` - Create new lead (rate limited)
+
+#### Admin
+- `POST /admin/cache/purge` - Purge application cache
+
+## Configuration
+
+### Environment Variables
+```env
+# Application
+APP_NAME=YallaMotor
+APP_ENV=local
+APP_DEBUG=true
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=yalla_motor
+
+# Cache
+CACHE_DRIVER=array  # or redis for production
+
+# Queue
+QUEUE_CONNECTION=sync  # or database/redis for production
+
+# Testing
+DB_TESTING_DATABASE=yalla_motor_testing
+```
+
+## Features
+
+- **Advanced Car Filtering**: Make, model, year, price, mileage, location
+- **Pagination**: Configurable page sizes with metadata
+- **Faceted Search**: Dynamic facets for make and year
+- **Lead Management**: Lead creation with validation and scoring
+- **Rate Limiting**: 5 leads per hour per IP/email
+- **Caching**: Intelligent cache invalidation
+- **Background Jobs**: Asynchronous lead scoring
+- **Comprehensive Testing**: 46+ test methods covering all functionality
+
+## Architecture
+
+This project follows a layered architecture pattern:
+
+- **Controllers**: Handle HTTP requests and responses
+- **Services**: Contain business logic and orchestration
+- **Queries**: Encapsulate complex database queries
+- **Filters**: Reusable filtering logic
+- **Jobs**: Background processing
+- **Resources**: API response formatting
+- **Models**: Data access and relationships

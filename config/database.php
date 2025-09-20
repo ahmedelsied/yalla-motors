@@ -118,7 +118,7 @@ return [
             'url' => env('DB_URL'),
             'host' => env('DB_TESTING_HOST', '127.0.0.1'),
             'port' => env('DB_TESTING_PORT', '3306'),
-            'database' => env('DB_TESTING_DATABASE', 'yallamotor_testing'),
+            'database' => env('DB_TESTING_DATABASE', 'yalla_motor_testing'),
             'username' => env('DB_TESTING_USERNAME', 'root'),
             'password' => env('DB_TESTING_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
